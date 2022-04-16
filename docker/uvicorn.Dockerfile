@@ -1,3 +1,4 @@
+# Base image
 FROM tiangolo/uvicorn-gunicorn-fastapi:python3.7
 
 # Load requirements
@@ -23,9 +24,5 @@ CMD [ "uvicorn" \
     , "--port", "8880" \
     , "--root-path", "." \
     , "--reload" \
-    , "--reload-include", "\"*.yaml\"" \
-    , "--reload-include", "\"*.joblib\"" \
-    , "--reload-include", "\"*.pkl\"" \
     , "--use-colors" \
-    , "--log-level", "debug" \
     ]
