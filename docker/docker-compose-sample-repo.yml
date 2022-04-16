@@ -1,12 +1,12 @@
 version: "3.8"
+name: update-from-git
 services:
     listener:
-        build: 
-            context: ../
-            dockerfile: docker/uvicorn.Dockerfile
+        image: chrimaho/update-from-git
         container_name: listener
         environment:
             - GIT_URL=https://github.com/chrimaho/code-snippets.git
+            - API_ENDPOINT=/api/webhook
             - REPO_DIR=repo
             - VERSION=0.0.1
             - TITLE=Update from Git
@@ -15,9 +15,6 @@ services:
             - CONTACT_URL=https://www.chrimaho.com
             - CONTACT_EMAIL=chrimaho@chrimaho.com
         volumes:
-            - ../src:/app/src
             - ../repo:/app/repo
         ports:
             - 8880:8000
-            - 443:8000
-            - 80:80
