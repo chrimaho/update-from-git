@@ -17,15 +17,14 @@
 
 
 # Library Imports ----
-import os, sys
-from typing import Any
-
+from sys import exc_info
+from os.path import exists
 from pydantic import BaseModel
 from decouple import config
 from fastapi import FastAPI, Query
 from fastapi.responses import PlainTextResponse, JSONResponse, HTMLResponse
 from git import Repo
-import shutil
+from shutil import rmtree
 
 
 # Compile Variables ----
@@ -85,8 +84,8 @@ app = FastAPI \
 
 # Remove all files within a diretory ----
 def remove_dir(dir:str) -> None:
-    if os.path.exists(dir):
-        shutil.rmtree(dir, ignore_errors=True)
+    if exists(dir):
+        rmtree(dir, ignore_errors=True)
     return None
 
 
@@ -182,7 +181,7 @@ def api_endpoint \
         remove_dir(repo_dir)
         Repo.clone_from(git_url, repo_dir)
     except:
-        e = sys.exc_info()
+        e = exc_info()
         return JSONResponse \
             ( { "Failed": f"{git_url}"
               , "Error": f"{e[0].__name__}"
