@@ -1,5 +1,5 @@
 # update-from-git
-A Python App, hosted on a Docker Image for listening to, and then pulling from, a git repository
+A Python App, hosted on a Docker Image for listening to, and then pulling from, a git repository.
 
 ## The Process
 
@@ -40,8 +40,6 @@ The process is quite simple. It will listen to a URL for a particular `POST` req
                     - ../repo:/app/repo
                 ports:
                     - 8880:8000
-                    - 443:8000
-                    - 80:80
         ```
 3. Run the Image:
     ```bash
@@ -100,9 +98,9 @@ The main difference from the above version is in the `docker-compose.yml` file, 
 | **3.** | VERSION       | The version number for the app                  | No        | `0.0.1`                                                                 |
 | **4.** | TITLE         | The title of the app                            | No        | `Update from Git`                                                       |
 | **5.** | DESCRIPTION   | The description of the app                      | No        | `Automated update process for pulling from Git repo upon webhook call.` |
-| **6.** | CONTACT_NAME  | The name of the person to contact about the app | No        | ` `                                                                     |
-| **7.** | CONTACT_URL   | The website for the contact person              | No        | ` `                                                                     |
-| **8.** | CONTACT_EMAIL | The email for the contact person                | No        | ` `                                                                     |
+| **6.** | CONTACT_NAME  | The name of the person to contact about the app | No        | `None`                                                                     |
+| **7.** | CONTACT_URL   | The website for the contact person              | No        | `None`                                                                     |
+| **8.** | CONTACT_EMAIL | The email for the contact person                | No        | `None`                                                                     |
 
 ## Contact Details
 
