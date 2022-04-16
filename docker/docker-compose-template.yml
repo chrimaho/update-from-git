@@ -1,0 +1,20 @@
+version: "3.8"
+name: <update>
+services:
+    listener:
+        image: chrimaho/update-from-git
+        container_name: listener
+        environment:
+            - GIT_URL=<update>
+            - REPO_DIR=<update>
+            - VERSION=<optional update>
+            - TITLE=<optional update>
+            - DESCRIPTION=<optional update>
+            - CONTACT_NAME=<optional update>
+            - CONTACT_URL=<optional update>
+            - CONTACT_EMAIL=<optional update>
+        volumes:
+            - ../src:/app/src
+            - ../repo:/app/repo
+        ports:
+            - 8880:8880
