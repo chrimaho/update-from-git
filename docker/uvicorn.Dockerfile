@@ -12,7 +12,7 @@ CMD [ "uvicorn" \
     , "main:app" \
     , "--app-dir", "./src/api" \
     , "--host", "0.0.0.0" \
-    , "--port", "8000" \
+    , "--port", "8880" \
     , "--root-path", "." \
     , "--reload" \
     , "--reload-include", "\"*.yaml\"" \
