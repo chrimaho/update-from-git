@@ -22,7 +22,8 @@ The process is quite simple. It will listen to a URL for a particular `POST` req
         version: "3.8"
         services:
             listener:
-                build: 
+                image: chrimaho/update-from-git
+                build:
                     context: ../
                     dockerfile: docker/uvicorn.Dockerfile
                 container_name: listener
@@ -64,7 +65,7 @@ The main difference from the above version is in the `docker-compose.yml` file, 
         version: "3.8"
         services:
             listener:
-                image: <to be added>
+                image: chrimaho/update-from-git
                 container_name: listener
                 environment:
                     - GIT_URL=https://github.com/chrimaho/code-snippets.git
