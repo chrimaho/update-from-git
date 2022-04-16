@@ -17,32 +17,49 @@
 
 
 # Library Imports ----
-from ctypes import Union
 import os, sys
+from typing import Any
+
+from pydantic import BaseModel
+from decouple import config
 from fastapi import FastAPI, Query
-from fastapi.responses import *
+from fastapi.responses import PlainTextResponse, JSONResponse, HTMLResponse
 from git import Repo
 import shutil
-from decouple import config
 
 
 # Compile Variables ----
-GIT_URL = config('GIT_URL', cast=str)
-REPO_DIR = config('REPO_DIR', cast=str)
-VERSION = config('VERSION', default='0.0.1', cast=str)
-TITLE = config('TITLE', default='Update from Git', cast=str)
-DESCRIPTION = config('DESCRIPTION', default='Automated update process for pulling from Git repo upon webhook call.', cast=str)
-CONTACT_NAME = config('CONTACT_NAME', default=None)
-CONTACT_URL = config('CONTACT_URL', default=None)
-CONTACT_EMAIL = config('CONTACT_EMAIL', default=None)
-CONTACT = {}
-if CONTACT_NAME: CONTACT["name"] = CONTACT_NAME
-if CONTACT_URL: CONTACT["url"] = CONTACT_URL
-if CONTACT_EMAIL: CONTACT["email"] = CONTACT_EMAIL
-print(CONTACT)
-print(CONTACT_NAME)
-print(CONTACT_URL)
-print(CONTACT_EMAIL)
+TITLE = config(option='TITLE', default='Update from Git', cast=str)
+DESCRIPTION = config \
+    ( option='DESCRIPTION'
+    , default='Automated update process for pulling from Git repo upon webhook call.'
+    , cast=str
+    )
+VERSION = config(option='VERSION', default='0.0.1', cast=str)
+GIT_URL = config(option='GIT_URL', cast=str)
+API_ENDPOINT = config(option="API_ENDPOINT", cast=str, default="/api/webhook")
+REPO_DIR = config(option='REPO_DIR', cast=str)
+CONTACT_DETAILS = \
+    { "name": config(option='CONTACT_NAME', default=None)
+    , "url": config(option='CONTACT_URL', default=None)
+    , "email": config(option='CONTACT_EMAIL', default=None)
+    }
+
+
+# Landing Page ----
+with open("./templates/template.html") as f:
+    LANDING_PAGE = f.read() \
+        .format \
+            ( TITLE = TITLE
+            , DESCRIPTION = DESCRIPTION
+            , VERSION = VERSION
+            , GIT_URL = GIT_URL
+            , API_ENDPOINT = API_ENDPOINT
+            , REPO_DIR = REPO_DIR
+            , CONTACT_NAME = CONTACT_DETAILS["name"]
+            , CONTACT_EMAIL = CONTACT_DETAILS["email"]
+            , CONTACT_URL = CONTACT_DETAILS["url"]
+            )
 
 
 # Instantiations ----
@@ -54,7 +71,7 @@ app = FastAPI \
         [ {"name":"App Info", "description":"Information about the App"}
         , {"name":"Main Process", "description":"The main Endpoints for th App"}
         ]
-    , contact=CONTACT
+    , contact=CONTACT_DETAILS
     , docs_url="/swagger"
     , root_path_in_servers=False
     )
@@ -62,37 +79,105 @@ app = FastAPI \
 
 
 #------------------------------------------------------------------------------#
+# Functions                                                                 ####
+#------------------------------------------------------------------------------#
+
+
+# Remove all files within a diretory ----
+def remove_dir(dir:str) -> None:
+    if os.path.exists(dir):
+        shutil.rmtree(dir, ignore_errors=True)
+    return None
+
+
+
+#------------------------------------------------------------------------------#
+# Models                                                                    ####
+#------------------------------------------------------------------------------#
+
+class Success(BaseModel):
+    Success: str = "GIT_URL"
+    
+class InternalServerError(BaseModel):
+    Failed: str = "GIT_URL"
+    Error: str = "Name of the error"
+    Doc: str = "Documentation about the error"
+    Message: str = "The error message itself"
+
+
+#------------------------------------------------------------------------------#
 # Endpoints                                                                 ####
 #------------------------------------------------------------------------------#
 
 
+# Landing Page ----
+@app.get \
+    ( path="/"
+    , summary="Landing page"
+    , description="The landing page for the application"
+    , tags=["App Info"]
+    , response_class=HTMLResponse
+    , responses= \
+        { 200: {"content": {"text/html": {"schema": None}}}
+        }
+    )
+def root():
+    return HTMLResponse \
+        ( content=LANDING_PAGE
+        , status_code=200
+        , media_type="text/html"
+        )
+
+
+# Health Check ----
 @app.get \
     ( path="/api/health"
     , summary="Health check"
     , description="Check to ensure that the app is healthy and ready to run."
     , tags=["App Info"]
+    , response_class=HTMLResponse
+    , responses= \
+        { 200: {"content": {"text/html": {"schema": None}}}
+        }
     )
-def root():
-    return PlainTextResponse("App is ready to go.", status_code=200)
+def health():
+    return PlainTextResponse \
+        ( "App is ready to go."
+        , status_code=200
+        , media_type="text/plain"
+        )
 
 
+# Main Endpoint ----
 @app.post \
-    ( "/api/clone_repo"
-    , summary="Clone Repo"
-    , description=f"Clone repo from: `{os.environ['GIT_URL']}`<br><br>And save to: `{os.environ['REPO_DIR']}`"
+    ( path=API_ENDPOINT
+    , summary="API Endpoint for Git to Call"
+    , description=f"Basically, it will:<br><br>1. `clone`/`pull` repo from: `{GIT_URL}`<br><br>2. Save repo to: `{REPO_DIR}`"
     , tags=["Main Process"]
+    , response_class=JSONResponse
+    , responses= \
+        { 200: {"model": Success}
+        , 500: {"model": InternalServerError}
+        , 422: {"description": "Validation Error", "content": {"application/json": {"schema": None}}}
+        }
     )
-def clone_repo \
-    ( git_url:str=Query(..., example=os.environ["GIT_URL"], title="Git URL", description="The URL from which the Repo will be cloned")
-    , repo_dir:str=Query(..., example=os.environ["REPO_DIR"], title="Repo Dir", description="The DIR to which the Repo will be cloned", )
+def api_endpoint \
+    ( git_url:str=Query \
+        ( ...
+        , example=GIT_URL
+        , title="Git URL"
+        , description="The URL from which the Repo will be cloned.<br>This is set from the Environment (`.env`) variables."
+        )
+    , repo_dir:str=Query \
+        ( ...
+        , example=REPO_DIR
+        , title="Repo Dir"
+        , description="The DIR to which the Repo will be cloned.<br>This is set from the Environment (`.env`) variables."
+        )
     ):
     try:
-        if os.path.exists(repo_dir):
-            shutil.rmtree(repo_dir, ignore_errors=True)
-        Repo.clone_from \
-            ( git_url
-            , repo_dir
-            )
+        remove_dir(repo_dir)
+        Repo.clone_from(git_url, repo_dir)
     except:
         e = sys.exc_info()
         return JSONResponse \
