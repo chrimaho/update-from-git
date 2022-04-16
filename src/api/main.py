@@ -96,13 +96,16 @@ def remove_dir(dir:str) -> None:
 #------------------------------------------------------------------------------#
 
 class Success(BaseModel):
-    Success: str = "GIT_URL"
+    Success: str = "Response Text"
     
 class InternalServerError(BaseModel):
-    Failed: str = "GIT_URL"
+    Failed: str = "The function or URL which was tried"
     Error: str = "Name of the error"
     Doc: str = "Documentation about the error"
     Message: str = "The error message itself"
+    
+class ValidationError(BaseModel):
+    Message: str = "Details about the validation error"
 
 
 #------------------------------------------------------------------------------#
@@ -158,7 +161,7 @@ def health():
     , responses= \
         { 200: {"model": Success}
         , 500: {"model": InternalServerError}
-        , 422: {"description": "Validation Error", "content": {"application/json": {"schema": None}}}
+        , 422: {"model": ValidationError}
         }
     )
 def api_endpoint \
