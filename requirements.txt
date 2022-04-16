@@ -1,6 +1,3 @@
 fastapi
-coverage
-validators
-pyyaml
 gitpython
 python-decouple
