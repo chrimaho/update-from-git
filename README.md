@@ -36,10 +36,9 @@ The process is quite simple. It will listen to a URL for a particular `POST` req
                     - CONTACT_URL=https://www.chrimaho.com
                     - CONTACT_EMAIL=chrimaho@chrimaho.com
                 volumes:
-                    - ../src:/app/src
                     - ../repo:/app/repo
                 ports:
-                    - 8880:8000
+                    - 8880:8880
         ```
 3. Run the Image:
     ```bash
@@ -69,6 +68,7 @@ The main difference from the above version is in the `docker-compose.yml` file, 
                 container_name: listener
                 environment:
                     - GIT_URL=https://github.com/chrimaho/code-snippets.git
+                    - API_ENDPOINT=/api/webhook
                     - REPO_DIR=repo
                     - VERSION=0.0.1
                     - TITLE=Update from Git
@@ -77,12 +77,9 @@ The main difference from the above version is in the `docker-compose.yml` file, 
                     - CONTACT_URL=https://www.chrimaho.com
                     - CONTACT_EMAIL=chrimaho@chrimaho.com
                 volumes:
-                    - ../src:/app/src
                     - ../repo:/app/repo
                 ports:
-                    - 8880:8000
-                    - 443:8000
-                    - 80:80
+                    - 8880:8880
         ```
 3. Run the Image:
     ```bash
