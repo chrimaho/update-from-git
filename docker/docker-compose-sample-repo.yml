@@ -10,7 +10,7 @@ services:
             - REPO_DIR=repo
             - VERSION=0.0.1
             - TITLE=Update from Git
-            - DESCRIPTION=Automated update process for pulling from Git repo upon webhook call.
+            - DESCRIPTION=Automated process for pulling from Git repo upon webhook call.
             - CONTACT_NAME=Chris Mahoney
             - CONTACT_URL=https://www.chrimaho.com
             - CONTACT_EMAIL=chrimaho@chrimaho.com
