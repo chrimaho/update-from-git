@@ -94,15 +94,15 @@ def remove_dir(dir:str) -> None:
 # Models                                                                    ####
 #------------------------------------------------------------------------------#
 
-# Successful response: status_code=200
+# Successful response: status_code=200 ----
 class Success(BaseModel):
     Success:str="Response Text"
 
-# Validation Error: status_code=422
+# Validation Error: status_code=422 ----
 class ValidationError(BaseModel):
     Message:str="Details about the validation error"
 
-# Server Error: status_code=500
+# Server Error: status_code=500 ----
 class InternalServerError(BaseModel):
     Failed:str="The function or URL which was tried"
     Error:str="Name of the error"
