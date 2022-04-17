@@ -18,3 +18,5 @@ services:
             - ../repo:/app/repo
         ports:
             - 8880:8880
+            - 443:8880
+            - 80:8880
