@@ -140,9 +140,9 @@ def root():
     , summary="Health check"
     , description="Check to ensure that the app is healthy and ready to run."
     , tags=["App Info"]
-    , response_class=HTMLResponse
+    , response_class=PlainTextResponse
     , responses= \
-        { 200: {"content": {"text/html": {"schema": None}}}
+        { 200: {"content": {"text/plain": {"schema": None}}}
         }
     )
 def health():
