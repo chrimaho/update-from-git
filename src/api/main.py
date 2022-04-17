@@ -16,7 +16,7 @@
 #------------------------------------------------------------------------------#
 
 
-# Library Imports ----
+# Import Libraries ----
 from sys import exc_info
 from os.path import exists
 from pydantic import BaseModel
@@ -45,7 +45,7 @@ CONTACT_DETAILS = \
     }
 
 
-# Landing Page ----
+# Set Landing Page ----
 with open("./templates/landing_page.html") as file:
     LANDING_PAGE = file.read() \
         .format \
@@ -94,7 +94,7 @@ def remove_dir(dir:str) -> None:
 # Models                                                                    ####
 #------------------------------------------------------------------------------#
 
-# Successful response: status_code=200 ----
+# Successful Response: status_code=200 ----
 class Success(BaseModel):
     Success:str="Response Text"
 
@@ -115,7 +115,7 @@ class InternalServerError(BaseModel):
 #------------------------------------------------------------------------------#
 
 
-# Landing Page ----
+# Endpoint: Landing Page ----
 @app.get \
     ( path="/"
     , summary="Landing page"
@@ -134,7 +134,7 @@ def root():
         )
 
 
-# Health Check ----
+# Endpoint: Health Check ----
 @app.get \
     ( path="/api/health"
     , summary="Health check"
@@ -153,7 +153,7 @@ def health():
         )
 
 
-# Main Endpoint ----
+# Endpoint: Main Endpoint ----
 @app.post \
     ( path=API_ENDPOINT
     , summary="API Endpoint for Git to Call"
