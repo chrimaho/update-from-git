@@ -89,17 +89,17 @@ The main difference from the above version is in the `docker-compose.yml` file, 
 
 ## Explanation on the Environment Variables
 
-|        | Title         | Description                                      | Mandatory | Default                                                                 |
-|--------|---------------|--------------------------------------------------|-----------|-------------------------------------------------------------------------|
-| **1.** | GIT_URL       | The URL from which the Repo will be cloned       | Yes       |                                                                         |
-| **2.** | API_ENDPOINT  | The Endpoint which will be called by the Webhook | No        | `/api/webhook`                                                          |
-| **3.** | REPO_DIR      | The DIR to which the Repo will be cloned         | Yes       |                                                                         |
-| **4.** | VERSION       | The version number for the app                   | No        | `0.0.1`                                                                 |
-| **5.** | TITLE         | The title of the app                             | No        | `Update from Git`                                                       |
-| **6.** | DESCRIPTION   | The description of the app                       | No        | `Automated update process for pulling from Git repo upon webhook call.` |
-| **7.** | CONTACT_NAME  | The name of the person to contact about the app  | No        | `None`                                                                  |
-| **8.** | CONTACT_URL   | The website for the contact person               | No        | `None`                                                                  |
-| **9.** | CONTACT_EMAIL | The email for the contact person                 | No        | `None`                                                                  |
+|        | Title           | Description                                      | Mandatory | Default                                                                 |
+|--------|-----------------|--------------------------------------------------|-----------|-------------------------------------------------------------------------|
+| **1.** | `GIT_URL`       | The URL from which the Repo will be cloned       | Yes       |                                                                         |
+| **2.** | `API_ENDPOINT`  | The Endpoint which will be called by the Webhook | No        | `/api/webhook`                                                          |
+| **3.** | `REPO_DIR`      | The DIR to which the Repo will be cloned         | Yes       |                                                                         |
+| **4.** | `VERSION`       | The version number for the app                   | No        | `0.0.1`                                                                 |
+| **5.** | `TITLE`         | The title of the app                             | No        | `Update from Git`                                                       |
+| **6.** | `DESCRIPTION`   | The description of the app                       | No        | `Automated update process for pulling from Git repo upon webhook call.` |
+| **7.** | `CONTACT_NAME`  | The name of the person to contact about the app  | No        | `None`                                                                  |
+| **8.** | `CONTACT_URL`   | The website for the contact person               | No        | `None`                                                                  |
+| **9.** | `CONTACT_EMAIL` | The email for the contact person                 | No        | `None`                                                                  |
 
 ## Contact Details
 
