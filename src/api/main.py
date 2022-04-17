@@ -46,8 +46,8 @@ CONTACT_DETAILS = \
 
 
 # Landing Page ----
-with open("./templates/template.html") as f:
-    LANDING_PAGE = f.read() \
+with open("./templates/template.html") as file:
+    LANDING_PAGE = file.read() \
         .format \
             ( TITLE = TITLE
             , DESCRIPTION = DESCRIPTION
