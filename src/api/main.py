@@ -61,7 +61,7 @@ with open("./templates/template.html") as file:
             )
 
 
-# Instantiations ----
+# Instantiate App ----
 app = FastAPI \
     ( title=TITLE
     , description=DESCRIPTION
