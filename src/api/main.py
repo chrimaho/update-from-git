@@ -171,16 +171,14 @@ def health():
     )
 def api_endpoint \
     ( git_url:str=Query \
-        ( ...
-        , example=GIT_URL
+        ( default=GIT_URL
         , title="Git URL"
         , description= \
             "The URL from which the Repo will be cloned.<br>" +
             "This is set from the Environment (`.env`) variables."
         )
     , repo_dir:str=Query \
-        ( ...
-        , example=REPO_DIR
+        ( default=REPO_DIR
         , title="Repo Dir"
         , description= \
             "The DIR to which the Repo will be cloned.<br>" +
