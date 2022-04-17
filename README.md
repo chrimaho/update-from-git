@@ -89,7 +89,7 @@ The main difference from the above version is in the `docker-compose.yml` file, 
 
 ## Explanation on the Environment Variables
 
-|        | Title           | Description                                      | Mandatory | Default                                                                 |
+|        | Variable        | Description                                      | Mandatory | Default                                                                 |
 |--------|-----------------|--------------------------------------------------|-----------|-------------------------------------------------------------------------|
 | **1.** | `GIT_URL`       | The URL from which the Repo will be cloned       | Yes       |                                                                         |
 | **2.** | `API_ENDPOINT`  | The Endpoint which will be called by the Webhook | No        | `/api/webhook`                                                          |
