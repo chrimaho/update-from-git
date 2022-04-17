@@ -78,7 +78,7 @@ The main difference from the above version is in the `docker-compose.yml` file, 
                     - CONTACT_URL=https://www.chrimaho.com
                     - CONTACT_EMAIL=chrimaho@chrimaho.com
                 volumes:
-                    - ../repo:/app/repo
+                    - ./repo:/app/repo
                 ports:
                     - 8880:8880
         ```
