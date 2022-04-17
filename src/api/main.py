@@ -18,12 +18,12 @@
 
 # Import Libraries ----
 from sys import exc_info
-from os.path import exists
-from pydantic import BaseModel
 from decouple import config
 from fastapi import FastAPI, Query
+from pydantic import BaseModel
 from fastapi.responses import PlainTextResponse, JSONResponse, HTMLResponse
 from git import Repo
+from os.path import exists
 from shutil import rmtree
 
 
