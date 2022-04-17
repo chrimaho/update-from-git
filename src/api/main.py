@@ -46,7 +46,7 @@ CONTACT_DETAILS = \
 
 
 # Landing Page ----
-with open("./templates/template.html") as file:
+with open("./templates/landing_page.html") as file:
     LANDING_PAGE = file.read() \
         .format \
             ( TITLE = TITLE
@@ -157,12 +157,15 @@ def health():
 @app.post \
     ( path=API_ENDPOINT
     , summary="API Endpoint for Git to Call"
-    , description=f"Basically, it will:<br><br>1. `clone`/`pull` repo from: `{GIT_URL}`<br><br>2. Save repo to: `{REPO_DIR}`"
+    , description= \
+        "Basically, it will:<br><br>"+
+        f"1. `clone`/`pull` repo from: `{GIT_URL}`<br><br>"+
+        f"2. Save repo to: `{REPO_DIR}`"
     , tags=["Main Process"]
     , response_class=JSONResponse
     , responses= \
         { 200: {"model": Success}
-        , 422: {"model": ValidationError}
+        , 422: {"model": ValidationError, "description": "Validation Error"}
         , 500: {"model": InternalServerError}
         }
     )
@@ -171,13 +174,17 @@ def api_endpoint \
         ( ...
         , example=GIT_URL
         , title="Git URL"
-        , description="The URL from which the Repo will be cloned.<br>This is set from the Environment (`.env`) variables."
+        , description= \
+            "The URL from which the Repo will be cloned.<br>"+
+            "This is set from the Environment (`.env`) variables."
         )
     , repo_dir:str=Query \
         ( ...
         , example=REPO_DIR
         , title="Repo Dir"
-        , description="The DIR to which the Repo will be cloned.<br>This is set from the Environment (`.env`) variables."
+        , description= \
+            "The DIR to which the Repo will be cloned.<br>"+
+            "This is set from the Environment (`.env`) variables."
         )
     ):
     try:
@@ -195,7 +202,6 @@ def api_endpoint \
             )
     else:
         return JSONResponse \
-            ( { "Success": git_url
-              }
+            ( {"Success": git_url}
             , status_code=200
             )
