@@ -158,8 +158,8 @@ def health():
     ( path=API_ENDPOINT
     , summary="API Endpoint for Git to Call"
     , description= \
-        "Basically, it will:<br><br>"+
-        f"1. `clone`/`pull` repo from: `{GIT_URL}`<br><br>"+
+        "Basically, it will:<br><br>" +
+        f"1. `clone`/`pull` repo from: `{GIT_URL}`<br><br>" +
         f"2. Save repo to: `{REPO_DIR}`"
     , tags=["Main Process"]
     , response_class=JSONResponse
@@ -175,7 +175,7 @@ def api_endpoint \
         , example=GIT_URL
         , title="Git URL"
         , description= \
-            "The URL from which the Repo will be cloned.<br>"+
+            "The URL from which the Repo will be cloned.<br>" +
             "This is set from the Environment (`.env`) variables."
         )
     , repo_dir:str=Query \
@@ -183,7 +183,7 @@ def api_endpoint \
         , example=REPO_DIR
         , title="Repo Dir"
         , description= \
-            "The DIR to which the Repo will be cloned.<br>"+
+            "The DIR to which the Repo will be cloned.<br>" +
             "This is set from the Environment (`.env`) variables."
         )
     ):
