@@ -15,7 +15,7 @@ services:
             - CONTACT_URL=https://www.chrimaho.com
             - CONTACT_EMAIL=chrimaho@chrimaho.com
         volumes:
-            - ../repo:/app/repo
+            - ./repo:/app/repo
         ports:
             - 8880:8000
             - 443:8880
