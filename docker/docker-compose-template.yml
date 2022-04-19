@@ -14,7 +14,6 @@ services:
             - CONTACT_URL=<optional update>
             - CONTACT_EMAIL=<optional update>
         volumes:
-            - ../src:/app/src
             - ../repo:/app/repo
         ports:
             - 8880:8880
