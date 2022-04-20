@@ -6,6 +6,7 @@ services:
         container_name: listener
         environment:
             - GIT_URL=<update>
+            - API_ENDPOINT=<optional update>
             - REPO_DIR=<update>
             - VERSION=<optional update>
             - TITLE=<optional update>
